@@ -34,6 +34,9 @@ let ccNum = document.getElementById('cc-num');
 const zip = document.getElementById('zip');
 const cvv = document.getElementById('cvv');
 const otherRole = document.getElementById('other');
+const colorSelectionLabel = document.querySelector('label[for="color"]');
+const colorSelectionSelect = document.getElementById('color');
+let errorMessageExists = false;
 
 // Regex values 
 const nameRegex = /[A-Za-z]+\s[A-Za-z]+/g;
@@ -54,10 +57,11 @@ optionsDesign.value = "default";
 optionsSize.value = "medium";
 optionsPayment.value = "credit card";
 $('input[name="user_other"]').hide();
-$('label[for="color"]').hide();
-$('#color').hide();
+colorSelectionLabel.style.display = 'none';
+colorSelectionSelect.style.display = 'none';
+$('p.event-error').hide();
 
-// loop for setting all check settings for checkboxes false and hiding total
+// loop for setting all check settings for checkboxes false and hiding text
 for (let i = 1; i < activities.children.length-1; ++i) {
     activities.children[i].children[0].checked = false;
 }
@@ -114,6 +118,7 @@ $('#design').click(function() {
 }); 
 
 $('.activities').click((e) => {
+    window.eventChosen = false;
     let total = 0;
     if($('input[name="all"]').is(':checked')) {
         total += 200;
@@ -161,10 +166,12 @@ $('.activities').click((e) => {
     }
     if (total === 0) {
         $($total).hide();
+        window.eventChosen = false;
     } 
     if (total != 0) {
         $($total).show();
         $total.html('Total Cost: $' + total);
+        window.eventChosen = true;
     }
 });
 
@@ -198,33 +205,75 @@ $('form').submit(function(event) {
     if (nameRegex.test(name.value) === false) {
         name.style.border = '2px solid red';
         errorsExist = true;
+    } 
+    if (nameRegex.test(name.value) === true) {
+        name.style.border = '2px solid #b0d3e2';
+        errorsExist = false;
     }
     if (emailRegex.test(email.value) === false) {
         email.style.border = '2px solid red';
         errorsExist = true;
+    } 
+    if (emailRegex.test(email.value) === true) {
+        email.style.border = '2px solid #b0d3e2';
+        console.log(emailRegex.test(email.value));
+        errorsExist = false;
     }
     if (optionsTitle.value === 'other') {
         if (otherRoleRegex.test(otherRole.value) === false) {
             otherRole.style.border = '2px solid red';
             errorsExist = true;
+        } else if (otherRoleRegex.test(otherRole.value) === true) {
+            otherRole.style.border = '2px solid #b0d3e2';
+            errorsExist = false;
         }
+    }
+    if (!window.eventChosen) {
+        if (!errorMessageExists) { 
+            window.eventError = document.createElement('p');
+            const eventErrorText = document.createTextNode('*Please select an event.');
+            eventError.style.color = 'red';
+            window.eventError.appendChild(eventErrorText);
+            activities.appendChild(window.eventError);
+            errorMessageExists = true;
+        }
+        errorsExist = true;
+    }
+    if (window.eventChosen && errorMessageExists) {
+        if (errorMessageExists) { 
+            window.eventError.parentElement.removeChild(eventError);
+            errorMessageExists = false;
+        }
+        errorsExist = true;
     }
     if (optionsPayment.value === 'credit card') {
         if (ccNumRegexCheck.test(ccNum.value) === true) {
             // Source: https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
             ccNum.value = ccNum.value.split(' ').join('');          
-        }
+        } 
         if (ccNumRegex.test(ccNum.value) === false) {
             ccNum.style.border = '2px solid red';
             errorsExist = true;
+        }
+        if (ccNumRegex.test(ccNum.value) === true) {
+            ccNum.style.border = '2px solid #b0d3e2';
+            errorsExist = false;
         }
         if (zipRegex.test(zip.value) === false) {
             zip.style.border = '2px solid red';
             errorsExist = true;
         }
+        if (zipRegex.test(ccNum.value) === true) {
+            ccNum.style.border = '2px solid #b0d3e2';
+            errorsExist = false;
+        }
         if (cvvRegex.test(cvv.value) === false) {
             cvv.style.border = '2px solid red';
             errorsExist = true;
+        }
+        if (cvvRegex.test(ccNum.value) === true) {
+            ccNum.style.border = '2px solid #b0d3e2';
+            errorsExist = false;
         }
     }
     if (!errorsExist) {

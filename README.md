@@ -1,0 +1,3 @@
+			FSJS Project Three submission by Zane Chandy 6-20-2019
+
+This is my first submission for the third project of the Full Stack Javascript techdegree program. In this project we added interactivity to the already provided form from Treehouse (index.html and css/style.css) via Javascript by implementing error handlers and regex boolean conditions for form validation. jQuery was used heavily in this project alongside vanilla Javascript and Regular expressions. Third-party source code was also used in this project to which credit has been giving specifically.

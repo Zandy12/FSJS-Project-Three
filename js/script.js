@@ -37,10 +37,11 @@ const otherRole = document.getElementById('other');
 const colorSelectionLabel = document.querySelector('label[for="color"]');
 const colorSelectionSelect = document.getElementById('color');
 let errorMessageExists = false;
+let errorsExist = false;
 
 // Regex values 
 const nameRegex = /[A-Za-z]+\s[A-Za-z]+/g;
-const emailRegex = /^[a-z0-9]+@[a-z]+.+[a-z]+$/g;
+const emailRegex = /^[A-Za-z0-9]+@[A-Za-z]+.+[A-Za-z]+$/g;
 const ccNumRegexCheck = /[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}/g;
 const ccNumRegex = /^[0-9]{13,16}$/g; // do string replacement for this one 
 const zipRegex = /^[0-9]{5}$/g;
@@ -98,7 +99,6 @@ $('#design').click(function() {
         $('option[value="cornflowerblue"]').show();
         $('option[value="darkslategrey"]').show();
         $('option[value="gold"]').show();   
-        optionsColor.value = "default";
     }
     if (optionsDesign.value === 'heart js') {
         $('label[for="color"]').show();
@@ -109,7 +109,6 @@ $('#design').click(function() {
         $('option[value="tomato"]').show();
         $('option[value="steelblue"]').show();
         $('option[value="dimgrey"]').show();   
-        optionsColor.value = "default";
     }
     if (optionsDesign.value != 'heart js' && optionsDesign.value != 'js puns') {
         $('label[for="color"]').hide();
@@ -199,31 +198,27 @@ $('#payment').click(function() {
 });   
 
 // check for validation using regex when user clicks submit button before submission
-$('form').submit(function(event) {
+document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
-    let errorsExist = false;
     if (nameRegex.test(name.value) === false) {
         name.style.border = '2px solid red';
         errorsExist = true;
-    } 
-    if (nameRegex.test(name.value) === true) {
+    } else {
         name.style.border = '2px solid #b0d3e2';
         errorsExist = false;
     }
     if (emailRegex.test(email.value) === false) {
         email.style.border = '2px solid red';
         errorsExist = true;
-    } 
-    if (emailRegex.test(email.value) === true) {
+    } else {
         email.style.border = '2px solid #b0d3e2';
-        console.log(emailRegex.test(email.value));
         errorsExist = false;
     }
     if (optionsTitle.value === 'other') {
         if (otherRoleRegex.test(otherRole.value) === false) {
             otherRole.style.border = '2px solid red';
             errorsExist = true;
-        } else if (otherRoleRegex.test(otherRole.value) === true) {
+        } else {
             otherRole.style.border = '2px solid #b0d3e2';
             errorsExist = false;
         }
@@ -244,7 +239,7 @@ $('form').submit(function(event) {
             window.eventError.parentElement.removeChild(eventError);
             errorMessageExists = false;
         }
-        errorsExist = true;
+        errorsExist = false;
     }
     if (optionsPayment.value === 'credit card') {
         if (ccNumRegexCheck.test(ccNum.value) === true) {
@@ -254,25 +249,22 @@ $('form').submit(function(event) {
         if (ccNumRegex.test(ccNum.value) === false) {
             ccNum.style.border = '2px solid red';
             errorsExist = true;
-        }
-        if (ccNumRegex.test(ccNum.value) === true) {
+        } else {
             ccNum.style.border = '2px solid #b0d3e2';
             errorsExist = false;
         }
         if (zipRegex.test(zip.value) === false) {
             zip.style.border = '2px solid red';
             errorsExist = true;
-        }
-        if (zipRegex.test(ccNum.value) === true) {
-            ccNum.style.border = '2px solid #b0d3e2';
+        } else {
+            zip.style.border = '2px solid #b0d3e2';
             errorsExist = false;
         }
         if (cvvRegex.test(cvv.value) === false) {
             cvv.style.border = '2px solid red';
             errorsExist = true;
-        }
-        if (cvvRegex.test(ccNum.value) === true) {
-            ccNum.style.border = '2px solid #b0d3e2';
+        } else {
+            cvv.style.border = '2px solid #b0d3e2';
             errorsExist = false;
         }
     }

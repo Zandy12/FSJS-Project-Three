@@ -89,7 +89,7 @@ $('#title').change(function() {
 });
 
 $('#design').change(function() {
-    if (optionsDesign.value === 'js puns') {
+    if (optionsDesign.value === 'js puns') { 
         $('label[for="color"]').show();
         $('#color').show();
         $('option[value="tomato"]').hide();
@@ -97,7 +97,8 @@ $('#design').change(function() {
         $('option[value="dimgrey"]').hide();
         $('option[value="cornflowerblue"]').show();
         $('option[value="darkslategrey"]').show();
-        $('option[value="gold"]').show();   
+        $('option[value="gold"]').show();
+        optionsColor.value = 'cornflowerblue';  
     }
     if (optionsDesign.value === 'heart js') {
         $('label[for="color"]').show();
@@ -107,11 +108,12 @@ $('#design').change(function() {
         $('option[value="gold"]').hide();     
         $('option[value="tomato"]').show();
         $('option[value="steelblue"]').show();
-        $('option[value="dimgrey"]').show();   
+        $('option[value="dimgrey"]').show();
+        optionsColor.value = 'tomato';   
     }
     if (optionsDesign.value != 'heart js' && optionsDesign.value != 'js puns') {
         $('label[for="color"]').hide();
-        $('#color').hide();       
+        $('#color').hide();     
     }
 }); 
 
@@ -231,39 +233,24 @@ document.querySelector('form').addEventListener('submit', function(event) {
             activities.appendChild(window.eventError);
             errorMessageExists = true;
         }
-        errorsExist = true;
+        errorExists = true;
     }
     if (window.eventChosen && errorMessageExists) {
         if (errorMessageExists) { 
             window.eventError.parentElement.removeChild(eventError);
             errorMessageExists = false;
         }
-        errorsExist = false;
     }
     if (optionsPayment.value === 'credit card') {
         if (ccNumRegexCheck.test(ccNum.value) === true) {
             // Source: https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
             ccNum.value = ccNum.value.split(' ').join('');          
         } 
-        if (ccNumRegex.test(ccNum.value) === false) {
+        if (ccNumRegex.test(ccNum.value) === false || zipRegex.test(zip.value) === false || cvvRegex.test(cvv.value) === false) {
             ccNum.style.border = '2px solid red';
             errorsExist = true;
         } else {
             ccNum.style.border = '2px solid #b0d3e2';
-            errorsExist = false;
-        }
-        if (zipRegex.test(zip.value) === false) {
-            zip.style.border = '2px solid red';
-            errorsExist = true;
-        } else {
-            zip.style.border = '2px solid #b0d3e2';
-            errorsExist = false;
-        }
-        if (cvvRegex.test(cvv.value) === false) {
-            cvv.style.border = '2px solid red';
-            errorsExist = true;
-        } else {
-            cvv.style.border = '2px solid #b0d3e2';
             errorsExist = false;
         }
     }

@@ -80,16 +80,15 @@ $(bitcoin).hide();
  *    EVENT HANDLERS 
  ************************/
 
-$('#title').click(function() {
+$('#title').change(function() {
     if (optionsTitle.value === 'other') {
-        $('input[name="user_other"]').show();
-    } 
-    else if (optionsTitle.value != 'other') {
-        $('input[name="user_other"]').hide();
+            $('input[name="user_other"]').show();
+        } else if (optionsTitle.value != 'other') {
+            $('input[name="user_other"]').hide();
     }
 });
 
-$('#design').click(function() {
+$('#design').change(function() {
     if (optionsDesign.value === 'js puns') {
         $('label[for="color"]').show();
         $('#color').show();
@@ -116,7 +115,7 @@ $('#design').click(function() {
     }
 }); 
 
-$('.activities').click((e) => {
+$('.activities').change((e) => {
     window.eventChosen = false;
     let total = 0;
     if($('input[name="all"]').is(':checked')) {
@@ -174,7 +173,7 @@ $('.activities').click((e) => {
     }
 });
 
-$('#payment').click(function() {
+$('#payment').change(function() {
     if (optionsPayment.value === "select_method") {
         $(creditcard).hide();
         $(paypal).hide();
